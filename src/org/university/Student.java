@@ -48,4 +48,7 @@ public class Student {
         this.age = age;
     }
 
+    public List<Class> getAssignedClasses() {
+        return assignedClasses;
+    }
 }
