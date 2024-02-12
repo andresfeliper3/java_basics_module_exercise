@@ -1,9 +1,37 @@
 package org.university;
 
 public abstract class Teacher {
-    private String name;
-    private double baseSalary;
-    private double totalSalary;
-    private int experienceYears;
-    private double activeHoursPerWeek;
+
+    public static final int workWeeks = 4;
+    protected String name;
+    protected double baseSalaryPerHour;
+    protected double totalSalaryPerMonth;
+    protected int experienceYears;
+    protected double activeHoursPerWeek;
+
+    public Teacher(String name, double baseSalary, int experienceYears, double activeHoursPerWeek) {
+        this.name = name;
+        this.baseSalaryPerHour = baseSalary;
+        this.experienceYears = experienceYears;
+        this.activeHoursPerWeek = activeHoursPerWeek;
+    }
+
+    public abstract double getTotalSalaryPerMonth();
+
+    public String getName() {
+        return name;
+    }
+
+    public double getBaseSalaryPerHour() {
+        return baseSalaryPerHour;
+    }
+
+    public int getExperienceYears() {
+        return experienceYears;
+    }
+
+    public double getActiveHoursPerWeek() {
+        return activeHoursPerWeek;
+    }
+
 }
