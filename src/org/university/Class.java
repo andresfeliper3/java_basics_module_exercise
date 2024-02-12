@@ -51,5 +51,7 @@ public class Class {
     public Teacher getTeacher() {
         return teacher;
     }
+
+
 }
 
