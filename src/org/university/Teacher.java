@@ -34,4 +34,11 @@ public abstract class Teacher {
         return activeHoursPerWeek;
     }
 
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "name='" + name + '\'' +
+                ", totalSalaryPerMonth=" + totalSalaryPerMonth +
+                '}';
+    }
 }

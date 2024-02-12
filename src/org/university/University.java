@@ -1,5 +1,6 @@
 package org.university;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -65,6 +66,8 @@ public class University {
         addTeacherToClass(teachers.get(0), class4);
         addClassroomToClass("AUD 7", class4);
         addStudentsToClass(Arrays.asList(students.get(4), students.get(5)), class4);
+
+        createClasses(Arrays.asList(class1, class2, class3, class4));
     }
 
     public List<Class> searchClassesByStudentId(String id) {
