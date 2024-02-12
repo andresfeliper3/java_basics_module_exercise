@@ -14,6 +14,7 @@ public abstract class Teacher {
         this.baseSalaryPerHour = baseSalary;
         this.experienceYears = experienceYears;
         this.activeHoursPerWeek = activeHoursPerWeek;
+        this.totalSalaryPerMonth = getTotalSalaryPerMonth();
     }
 
     public abstract double getTotalSalaryPerMonth();
