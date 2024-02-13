@@ -16,6 +16,7 @@ public class Student {
         assignedClasses = new ArrayList<>();
     }
 
+
     public void assignClasses(List<Class> classes){
         assignedClasses.addAll(classes);
     }
@@ -50,5 +51,13 @@ public class Student {
 
     public List<Class> getAssignedClasses() {
         return assignedClasses;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "name='" + name + '\'' +
+                ", id='" + id + '\'' +
+                '}';
     }
 }
