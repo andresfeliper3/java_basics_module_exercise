@@ -1,9 +1,9 @@
 package org.university;
 
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class Menu {
     private University university;
@@ -32,6 +32,7 @@ public class Menu {
             }
             else if(option == 2) {
                 printAllClasses();
+                activateClassesSubmenu(scanner);
             }
             else if(option == 6) {
                 break;
@@ -45,8 +46,27 @@ public class Menu {
     }
 
     private void printAllClasses() {
-        university.getClasses().stream()
-                .map(universityClass -> universityClass.getName() + " - " + universityClass.getCode())
+        List<Class> classes = university.getClasses();
+        IntStream.range(0, classes.size())
+                .mapToObj(i -> (i + 1) + ". " + classes.get(i).getName() + " - " +
+                        classes.get(i).getCode())
                 .forEach(System.out::println);
+    }
+
+    private void activateClassesSubmenu(Scanner scanner) {
+        while(true) {
+            System.out.println("*********************************************");
+            System.out.println("Enter the number of the class you would like to get more information about. \nEnter (q) to quit this submenu.");
+            String option;
+            try {
+                option = scanner.nextLine();
+                if(option.equalsIgnoreCase("q")) break;
+
+            } catch(InputMismatchException e) {
+                throw new RuntimeException("Invalid input");
+            }
+            Class selectedClass = university.getClasses().get(Integer.parseInt(option) - 1);
+            System.out.println(selectedClass);
+        }
     }
 }

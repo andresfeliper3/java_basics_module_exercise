@@ -52,6 +52,15 @@ public class Class {
         return teacher;
     }
 
-
+    @Override
+    public String toString() {
+        return "Class{" +
+                "name='" + name + '\'' +
+                ", code='" + code + '\'' +
+                ", classroom='" + classroom + '\'' +
+                ", \nstudents=" + students +
+                ", \nteacher=" + teacher.getName() +
+                "}\n";
+    }
 }
 

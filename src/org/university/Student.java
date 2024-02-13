@@ -51,4 +51,12 @@ public class Student {
     public List<Class> getAssignedClasses() {
         return assignedClasses;
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "name='" + name + '\'' +
+                ", id='" + id + '\'' +
+                '}';
+    }
 }

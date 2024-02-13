@@ -39,7 +39,10 @@ public abstract class Teacher {
     public String toString() {
         return "Teacher{" +
                 "name='" + name + '\'' +
+                ", baseSalaryPerHour=" + baseSalaryPerHour +
                 ", totalSalaryPerMonth=" + totalSalaryPerMonth +
-                '}';
+                ", experienceYears=" + experienceYears +
+                ", activeHoursPerWeek=" + activeHoursPerWeek +
+                "}\n";
     }
 }
