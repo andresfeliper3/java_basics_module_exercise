@@ -16,6 +16,7 @@ public class Student {
         assignedClasses = new ArrayList<>();
     }
 
+
     public void assignClasses(List<Class> classes){
         assignedClasses.addAll(classes);
     }

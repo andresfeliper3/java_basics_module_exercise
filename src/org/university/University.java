@@ -97,6 +97,7 @@ public class University {
 
     public void addStudentToClass(Student student, Class aClass) {
         aClass.addStudent(student);
+        student.assignClass(aClass);
     }
 
     public void addStudentsToClass(List<Student> students, Class aClass) {

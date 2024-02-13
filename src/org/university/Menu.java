@@ -1,5 +1,6 @@
 package org.university;
 
+import java.sql.SQLOutput;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -34,6 +35,9 @@ public class Menu {
                 printAllClasses();
                 activateClassesSubmenu(scanner);
             }
+            else if(option == 3) {
+                activateStudentCreationSubmenu(scanner);
+            }
             else if(option == 6) {
                 break;
             }
@@ -67,6 +71,66 @@ public class Menu {
             }
             Class selectedClass = university.getClasses().get(Integer.parseInt(option) - 1);
             System.out.println(selectedClass);
+        }
+    }
+
+    private void activateStudentCreationSubmenu(Scanner scanner) {
+        System.out.println("*********************************************");
+        try {
+            System.out.println("Enter the student name:");
+            String name = scanner.nextLine();
+            System.out.println("Enter the student id:");
+            String id = scanner.nextLine();
+
+            int age = getValidAge(scanner);
+
+            Student newStudent = new Student(name, id, age);
+            university.createStudent(newStudent);
+
+            Class assignedClass = getValidClass(scanner);
+            university.addStudentToClass(newStudent, assignedClass);
+
+            System.out.println("Successfully added");
+
+        } catch (InputMismatchException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    private int getValidAge(Scanner scanner) {
+        while (true) {
+            System.out.println("Enter the student age:");
+            try {
+                int age = scanner.nextInt();
+                if (age <= 0) {
+                    System.out.println("Invalid input for student age. Enter a valid age.");
+                    continue;
+                }
+                return age;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input for student age. Please enter a valid number.");
+            } finally {
+                scanner.nextLine();
+            }
+        }
+    }
+
+    private Class getValidClass(Scanner scanner) {
+        while (true) {
+            printAllClasses();
+            System.out.println("Enter the number of the class you would like to add the new student to.");
+            try {
+                int classNumber = scanner.nextInt();
+                if (classNumber <= 0 || classNumber > university.getClasses().size()) {
+                    System.out.println("Invalid input for class number. Enter a valid number.");
+                    continue;
+                }
+                return university.getClasses().get(classNumber - 1);
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input for class number. Enter a valid number.");
+            } finally {
+                scanner.nextLine();
+            }
         }
     }
 }
