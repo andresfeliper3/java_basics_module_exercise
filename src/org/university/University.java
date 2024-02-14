@@ -81,11 +81,11 @@ public class University {
 
     public Student searchStudentById(String id) {
         for(Student student : students) {
-            if(id.equals(student.getId())) {
+            if(student.getId().equals(id)) {
                 return student;
             }
         }
-        return null;
+        throw new RuntimeException("No student associated with that ID.");
     }
 
     public List<Class> searchClassesByStudent(Student student) {
@@ -107,6 +107,9 @@ public class University {
 
     public void addStudentsToClass(List<Student> students, Class aClass) {
         aClass.addStudents(students);
+        for(Student student : students) {
+            student.assignClass(aClass);
+        }
     }
 
     public void createTeacher(Teacher teacher) {

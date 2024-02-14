@@ -41,6 +41,9 @@ public class Menu {
             else if(option == 3) {
                 activateStudentCreationSubmenu(scanner);
             }
+            else if(option == 5) {
+                printClassesByStudent(scanner);
+            }
             else if(option == 6) {
                 break;
             }
@@ -60,6 +63,9 @@ public class Menu {
                 .forEach(System.out::println);
     }
 
+    private void printAllStudents() {
+        System.out.println(university.getStudents());
+    }
     private void activateClassesSubmenu(Scanner scanner) {
         while(true) {
             System.out.println("*********************************************");
@@ -124,6 +130,7 @@ public class Menu {
             System.out.println("Enter the number of the class you would like to add the new student to.");
             try {
                 int classNumber = scanner.nextInt();
+                //if the class number entered is negative or exceeds the amount of classes, ask for entering again
                 if (classNumber <= 0 || classNumber > university.getClasses().size()) {
                     System.out.println("Invalid input for class number. Enter a valid number.");
                     continue;
@@ -133,6 +140,25 @@ public class Menu {
                 System.out.println("Invalid input for class number. Enter a valid number.");
             } finally {
                 scanner.nextLine();
+            }
+        }
+    }
+
+
+    private void printClassesByStudent(Scanner scanner) {
+        System.out.println("*********************************************");
+        while (true) {
+            printAllStudents();
+            System.out.println("Enter the ID of the student whose classes you would like to see.");
+            String studentId = scanner.nextLine();
+            try {
+                Student studentSelected = university.searchStudentById(studentId);
+                for (Class aClass : studentSelected.getAssignedClasses()) {
+                    System.out.println(aClass.getName() + " - " + aClass.getCode());
+                }
+                break; // valid classes have been printed
+            } catch (RuntimeException e) {
+                System.out.println("Invalid student ID. Please enter a valid student ID:");
             }
         }
     }
