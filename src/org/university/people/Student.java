@@ -1,4 +1,6 @@
-package org.university;
+package org.university.people;
+
+import org.university.classes.Class;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
-package org.university;
+package org.university.people.teacher;
 
-public class FullTimeTeacher extends Teacher{
+public class FullTimeTeacher extends Teacher {
 
     public FullTimeTeacher(String name, double baseSalary, int experienceYears) {
         super(name, baseSalary, experienceYears, 48);

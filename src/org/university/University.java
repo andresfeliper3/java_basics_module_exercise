@@ -1,6 +1,11 @@
 package org.university;
 
-import java.lang.reflect.Array;
+import org.university.classes.Class;
+import org.university.people.teacher.FullTimeTeacher;
+import org.university.people.teacher.PartTimeTeacher;
+import org.university.people.Student;
+import org.university.people.teacher.Teacher;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
