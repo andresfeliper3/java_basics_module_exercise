@@ -1,6 +1,9 @@
-package org.university;
+package org.university.menu;
 
-import java.sql.SQLOutput;
+import org.university.University;
+import org.university.classes.Class;
+import org.university.people.Student;
+
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;

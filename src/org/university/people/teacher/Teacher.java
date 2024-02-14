@@ -1,4 +1,4 @@
-package org.university;
+package org.university.people.teacher;
 
 public abstract class Teacher {
 

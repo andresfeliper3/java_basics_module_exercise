@@ -1,4 +1,4 @@
-package org.university;
+package org.university.people.teacher;
 
 public class PartTimeTeacher extends Teacher {
     public PartTimeTeacher(String name, double baseSalary, int experienceYears, double activeHoursPerWeek) {
