@@ -124,59 +124,30 @@ public class Menu {
     }
 
     private Class getValidClass(Scanner scanner) {
-        while (true) {
-            printElementsToSelect(university.getClasses());
-            System.out.println("Enter the number of the class you would like to add the new student to.");
-            try {
-                int classNumber = scanner.nextInt();
-                //if the class number entered is negative or exceeds the amount of classes, ask for entering again
-                if (classNumber <= 0 || classNumber > university.getClasses().size()) {
-                    System.out.println("Invalid input for class number. Enter a valid number.");
-                    continue;
-                }
-                return university.getClasses().get(classNumber - 1);
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input for class number. Enter a valid number.");
-            } finally {
-                scanner.nextLine();
-            }
-        }
+        return (Class) getValidItem("class", university.getClasses(), scanner);
     }
 
     private Teacher getValidTeacher(Scanner scanner) {
-        while (true) {
-            printElementsToSelect(university.getTeachers());
-            System.out.println("Enter the number of the teacher you would like to add.");
-            try {
-                int teacherNumber = scanner.nextInt();
-                //if the class number entered is negative or exceeds the amount of classes, ask for entering again
-                if (teacherNumber <= 0 || teacherNumber > university.getTeachers().size()) {
-                    System.out.println("Invalid input for teacher number. Enter a valid number.");
-                    continue;
-                }
-                return university.getTeachers().get(teacherNumber - 1);
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input for teacher number. Enter a valid number.");
-            } finally {
-                scanner.nextLine();
-            }
-        }
+        return (Teacher) getValidItem("teacher", university.getTeachers(), scanner);
     }
 
     private Student getValidStudent(Scanner scanner) {
+        return (Student) getValidItem("student", university.getStudents(), scanner);
+    }
+
+    private Selectable getValidItem(String itemName, List<? extends Selectable> selectableList, Scanner scanner) {
         while (true) {
-            printElementsToSelect(university.getStudents());
-            System.out.println("Enter the number of the student you would like to add.");
+            printElementsToSelect(selectableList);
+            System.out.println("Enter the number of the " + itemName + " you would like to add.");
             try {
-                int studentNumber = scanner.nextInt();
-                //if the class number entered is negative or exceeds the amount of classes, ask for entering again
-                if (studentNumber <= 0 || studentNumber > university.getStudents().size()) {
-                    System.out.println("Invalid input for student number. Enter a valid number.");
+                int itemNumber = scanner.nextInt();
+                if (itemNumber <= 0 || itemNumber > selectableList.size()) {
+                    System.out.println("Invalid input for " + itemName + " number. Enter a valid number.");
                     continue;
                 }
-                return university.getStudents().get(studentNumber - 1);
+                return selectableList.get(itemNumber - 1);
             } catch (InputMismatchException e) {
-                System.out.println("Invalid input for student number. Enter a valid number.");
+                System.out.println("Invalid input for " + itemName + " number. Enter a valid number.");
             } finally {
                 scanner.nextLine();
             }
@@ -218,7 +189,7 @@ public class Menu {
     private void printClassesByStudent(Scanner scanner) {
         System.out.println("*********************************************");
         while (true) {
-            printAllStudents();
+            printElementsToSelect(university.getStudents());
             System.out.println("Enter the ID of the student whose classes you would like to see.");
             String studentId = scanner.nextLine();
             try {
