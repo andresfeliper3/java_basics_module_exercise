@@ -61,10 +61,6 @@ public class Menu {
         System.out.println(university.getTeachers());
     }
 
-
-    private void printAllStudents() {
-        System.out.println(university.getStudents());
-    }
     private void activateClassesSubmenu(Scanner scanner) {
         while(true) {
             System.out.println("*********************************************");
@@ -124,30 +120,30 @@ public class Menu {
     }
 
     private Class getValidClass(Scanner scanner) {
-        return (Class) getValidItem("class", university.getClasses(), scanner);
+        return (Class) getValidElement("class", university.getClasses(), scanner);
     }
 
     private Teacher getValidTeacher(Scanner scanner) {
-        return (Teacher) getValidItem("teacher", university.getTeachers(), scanner);
+        return (Teacher) getValidElement("teacher", university.getTeachers(), scanner);
     }
 
     private Student getValidStudent(Scanner scanner) {
-        return (Student) getValidItem("student", university.getStudents(), scanner);
+        return (Student) getValidElement("student", university.getStudents(), scanner);
     }
 
-    private Selectable getValidItem(String itemName, List<? extends Selectable> selectableList, Scanner scanner) {
+    private Selectable getValidElement(String elementName, List<? extends Selectable> selectableList, Scanner scanner) {
         while (true) {
             printElementsToSelect(selectableList);
-            System.out.println("Enter the number of the " + itemName + " you would like to add.");
+            System.out.println("Enter the number of the " + elementName + " you would like to add.");
             try {
                 int itemNumber = scanner.nextInt();
                 if (itemNumber <= 0 || itemNumber > selectableList.size()) {
-                    System.out.println("Invalid input for " + itemName + " number. Enter a valid number.");
+                    System.out.println("Invalid input for " + elementName + " number. Enter a valid number.");
                     continue;
                 }
                 return selectableList.get(itemNumber - 1);
             } catch (InputMismatchException e) {
-                System.out.println("Invalid input for " + itemName + " number. Enter a valid number.");
+                System.out.println("Invalid input for " + elementName + " number. Enter a valid number.");
             } finally {
                 scanner.nextLine();
             }
