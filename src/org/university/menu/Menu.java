@@ -37,7 +37,6 @@ public class Menu {
                 printAllTeachers();
             }
             else if(option == 2) {
-
                 printElementsToSelect(university.getClasses());
                 activateClassesSubmenu(scanner);
             }
@@ -175,6 +174,7 @@ public class Menu {
     }
 
     // Prints the list "selectables" as numbered elements to select from
+    // This helps to print the options with numbers in a standard way
     private void printElementsToSelect(List<? extends Selectable> selectables) {
         IntStream.range(0, selectables.size())
                 .mapToObj(i -> (i + 1) + ". " + selectables.get(i).getShowableDataToSelectMenu())
