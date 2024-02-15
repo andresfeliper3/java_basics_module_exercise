@@ -1,6 +1,8 @@
 package org.university.people.teacher;
 
-public abstract class Teacher {
+import org.university.Selectable;
+
+public abstract class Teacher implements Selectable {
 
     public static final int workWeeks = 4;
     protected String name;
@@ -44,5 +46,10 @@ public abstract class Teacher {
                 ", experienceYears=" + experienceYears +
                 ", activeHoursPerWeek=" + activeHoursPerWeek +
                 "}\n";
+    }
+
+    @Override
+    public String getShowableDataToSelectMenu() {
+        return name;
     }
 }

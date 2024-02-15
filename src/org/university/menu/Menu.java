@@ -1,8 +1,10 @@
 package org.university.menu;
 
+import org.university.Selectable;
 import org.university.University;
 import org.university.classes.Class;
 import org.university.people.Student;
+import org.university.people.teacher.Teacher;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -35,11 +37,15 @@ public class Menu {
                 printAllTeachers();
             }
             else if(option == 2) {
-                printAllClasses();
+
+                printElementsToSelect(university.getClasses());
                 activateClassesSubmenu(scanner);
             }
             else if(option == 3) {
                 activateStudentCreationSubmenu(scanner);
+            }
+            else if(option == 4) {
+                activateClassCreationSubmenu(scanner);
             }
             else if(option == 5) {
                 printClassesByStudent(scanner);
@@ -55,13 +61,6 @@ public class Menu {
         System.out.println(university.getTeachers());
     }
 
-    private void printAllClasses() {
-        List<Class> classes = university.getClasses();
-        IntStream.range(0, classes.size())
-                .mapToObj(i -> (i + 1) + ". " + classes.get(i).getName() + " - " +
-                        classes.get(i).getCode())
-                .forEach(System.out::println);
-    }
 
     private void printAllStudents() {
         System.out.println(university.getStudents());
@@ -125,30 +124,72 @@ public class Menu {
     }
 
     private Class getValidClass(Scanner scanner) {
+        return (Class) getValidItem("class", university.getClasses(), scanner);
+    }
+
+    private Teacher getValidTeacher(Scanner scanner) {
+        return (Teacher) getValidItem("teacher", university.getTeachers(), scanner);
+    }
+
+    private Student getValidStudent(Scanner scanner) {
+        return (Student) getValidItem("student", university.getStudents(), scanner);
+    }
+
+    private Selectable getValidItem(String itemName, List<? extends Selectable> selectableList, Scanner scanner) {
         while (true) {
-            printAllClasses();
-            System.out.println("Enter the number of the class you would like to add the new student to.");
+            printElementsToSelect(selectableList);
+            System.out.println("Enter the number of the " + itemName + " you would like to add.");
             try {
-                int classNumber = scanner.nextInt();
-                //if the class number entered is negative or exceeds the amount of classes, ask for entering again
-                if (classNumber <= 0 || classNumber > university.getClasses().size()) {
-                    System.out.println("Invalid input for class number. Enter a valid number.");
+                int itemNumber = scanner.nextInt();
+                if (itemNumber <= 0 || itemNumber > selectableList.size()) {
+                    System.out.println("Invalid input for " + itemName + " number. Enter a valid number.");
                     continue;
                 }
-                return university.getClasses().get(classNumber - 1);
+                return selectableList.get(itemNumber - 1);
             } catch (InputMismatchException e) {
-                System.out.println("Invalid input for class number. Enter a valid number.");
+                System.out.println("Invalid input for " + itemName + " number. Enter a valid number.");
             } finally {
                 scanner.nextLine();
             }
         }
     }
 
+    private void activateClassCreationSubmenu(Scanner scanner) {
+        System.out.println("*********************************************");
+        System.out.println("Enter the class name");
+        String className = scanner.nextLine();
+
+        System.out.println("Enter the class code");
+        String classCode = scanner.nextLine();
+
+        Class newClass = new Class(className, classCode);
+        university.createClass(newClass);
+
+        Teacher selectedTeacher = getValidTeacher(scanner);
+        university.addTeacherToClass(selectedTeacher, newClass);
+
+        System.out.println("Add existing students to the new class:");
+        Student selectedStudent = getValidStudent(scanner);
+        university.addStudentToClass(selectedStudent, newClass);
+
+        System.out.println("Type the classroom name of the new class:");
+        String classroomName = scanner.nextLine();
+        university.addClassroomToClass(classroomName, newClass);
+
+    }
+
+    // Prints the list "selectables" as numbered elements to select from
+    private void printElementsToSelect(List<? extends Selectable> selectables) {
+        IntStream.range(0, selectables.size())
+                .mapToObj(i -> (i + 1) + ". " + selectables.get(i).getShowableDataToSelectMenu())
+                .forEach(System.out::println);
+    }
+
 
     private void printClassesByStudent(Scanner scanner) {
         System.out.println("*********************************************");
         while (true) {
-            printAllStudents();
+            printElementsToSelect(university.getStudents());
             System.out.println("Enter the ID of the student whose classes you would like to see.");
             String studentId = scanner.nextLine();
             try {
