@@ -3,6 +3,7 @@ package org.university.menu;
 import org.university.University;
 import org.university.classes.Class;
 import org.university.people.Student;
+import org.university.people.teacher.Teacher;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -40,6 +41,9 @@ public class Menu {
             }
             else if(option == 3) {
                 activateStudentCreationSubmenu(scanner);
+            }
+            else if(option == 4) {
+                activateClassCreationSubmenu(scanner);
             }
             else if(option == 5) {
                 printClassesByStudent(scanner);
@@ -142,6 +146,77 @@ public class Menu {
                 scanner.nextLine();
             }
         }
+    }
+
+    private Teacher getValidTeacher(Scanner scanner) {
+        while (true) {
+            printAllTeachersToSelect();
+            System.out.println("Enter the number of the teacher you would like to add.");
+            try {
+                int teacherNumber = scanner.nextInt();
+                //if the class number entered is negative or exceeds the amount of classes, ask for entering again
+                if (teacherNumber <= 0 || teacherNumber > university.getTeachers().size()) {
+                    System.out.println("Invalid input for teacher number. Enter a valid number.");
+                    continue;
+                }
+                return university.getTeachers().get(teacherNumber - 1);
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input for teacher number. Enter a valid number.");
+            } finally {
+                scanner.nextLine();
+            }
+        }
+    }
+
+    private Student getValidStudent(Scanner scanner) {
+        while (true) {
+            printAllStudents();
+            System.out.println("Enter the number of the student you would like to add.");
+            try {
+                int studentNumber = scanner.nextInt();
+                //if the class number entered is negative or exceeds the amount of classes, ask for entering again
+                if (studentNumber <= 0 || studentNumber > university.getTeachers().size()) {
+                    System.out.println("Invalid input for student number. Enter a valid number.");
+                    continue;
+                }
+                return university.getStudents().get(studentNumber - 1);
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input for student number. Enter a valid number.");
+            } finally {
+                scanner.nextLine();
+            }
+        }
+    }
+
+    private void activateClassCreationSubmenu(Scanner scanner) {
+        System.out.println("*********************************************");
+        System.out.println("Enter the class name");
+        String className = scanner.nextLine();
+
+        System.out.println("Enter the class code");
+        String classCode = scanner.nextLine();
+
+        Class newClass = new Class(className, classCode);
+        university.createClass(newClass);
+
+        Teacher selectedTeacher = getValidTeacher(scanner);
+        university.addTeacherToClass(selectedTeacher, newClass);
+
+        System.out.println("Add existing students to the new class:");
+        Student selectedStudent = getValidStudent(scanner);
+        university.addStudentToClass(selectedStudent, newClass);
+
+        System.out.println("Type the classroom name of the new class:");
+        String classroomName = scanner.nextLine();
+        university.addClassroomToClass(classroomName, newClass);
+
+    }
+
+    private void printAllTeachersToSelect() {
+        List<Teacher> teachers = university.getTeachers();
+        IntStream.range(0, teachers.size())
+                .mapToObj(i -> (i + 1) + ". " + teachers.get(i).getName())
+                .forEach(System.out::println);
     }
 
 
