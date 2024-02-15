@@ -1,11 +1,12 @@
 package org.university.people;
 
+import org.university.Selectable;
 import org.university.classes.Class;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Student {
+public class Student implements Selectable {
     private String name;
     private String id;
     private int age;
@@ -61,5 +62,10 @@ public class Student {
                 "name='" + name + '\'' +
                 ", id='" + id + '\'' +
                 "}\n";
+    }
+
+    @Override
+    public String getShowableDataToSelectMenu() {
+        return name + " - " + id;
     }
 }

@@ -1,5 +1,6 @@
 package org.university.menu;
 
+import org.university.Selectable;
 import org.university.University;
 import org.university.classes.Class;
 import org.university.people.Student;
@@ -36,7 +37,8 @@ public class Menu {
                 printAllTeachers();
             }
             else if(option == 2) {
-                printAllClasses();
+
+                printElementsToSelect(university.getClasses());
                 activateClassesSubmenu(scanner);
             }
             else if(option == 3) {
@@ -59,13 +61,6 @@ public class Menu {
         System.out.println(university.getTeachers());
     }
 
-    private void printAllClasses() {
-        List<Class> classes = university.getClasses();
-        IntStream.range(0, classes.size())
-                .mapToObj(i -> (i + 1) + ". " + classes.get(i).getName() + " - " +
-                        classes.get(i).getCode())
-                .forEach(System.out::println);
-    }
 
     private void printAllStudents() {
         System.out.println(university.getStudents());
@@ -130,7 +125,7 @@ public class Menu {
 
     private Class getValidClass(Scanner scanner) {
         while (true) {
-            printAllClasses();
+            printElementsToSelect(university.getClasses());
             System.out.println("Enter the number of the class you would like to add the new student to.");
             try {
                 int classNumber = scanner.nextInt();
@@ -150,7 +145,7 @@ public class Menu {
 
     private Teacher getValidTeacher(Scanner scanner) {
         while (true) {
-            printAllTeachersToSelect();
+            printElementsToSelect(university.getTeachers());
             System.out.println("Enter the number of the teacher you would like to add.");
             try {
                 int teacherNumber = scanner.nextInt();
@@ -170,12 +165,12 @@ public class Menu {
 
     private Student getValidStudent(Scanner scanner) {
         while (true) {
-            printAllStudents();
+            printElementsToSelect(university.getStudents());
             System.out.println("Enter the number of the student you would like to add.");
             try {
                 int studentNumber = scanner.nextInt();
                 //if the class number entered is negative or exceeds the amount of classes, ask for entering again
-                if (studentNumber <= 0 || studentNumber > university.getTeachers().size()) {
+                if (studentNumber <= 0 || studentNumber > university.getStudents().size()) {
                     System.out.println("Invalid input for student number. Enter a valid number.");
                     continue;
                 }
@@ -212,10 +207,10 @@ public class Menu {
 
     }
 
-    private void printAllTeachersToSelect() {
-        List<Teacher> teachers = university.getTeachers();
-        IntStream.range(0, teachers.size())
-                .mapToObj(i -> (i + 1) + ". " + teachers.get(i).getName())
+    // Prints the list "selectables" as numbered elements to select from
+    private void printElementsToSelect(List<? extends Selectable> selectables) {
+        IntStream.range(0, selectables.size())
+                .mapToObj(i -> (i + 1) + ". " + selectables.get(i).getShowableDataToSelectMenu())
                 .forEach(System.out::println);
     }
 
